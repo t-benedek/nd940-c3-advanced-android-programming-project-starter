@@ -9,14 +9,60 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <ImageView
+        android:id="@+id/cloud_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimaryDark"
+        android:src="@drawable/baseline_cloud_download_24"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/cloud_image_view"/>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/custom_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cloud_image_view">
+
+        <RadioButton
+            android:id="@+id/glide_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/text_glide_radio"
+            />
+
+        <RadioButton
+            android:id="@+id/loadapp_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/text_loadapp_radio"
+            />
+
+        <RadioButton
+            android:id="@+id/retrofit_radio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/text_retrofit_radio"
+            />
+    </RadioGroup>
+
     <com.udacity.LoadingButton
         android:id="@+id/custom_button"
         android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="60dp"
         android:layout_margin="20dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,4 +11,8 @@
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="text_glide_radio">Glide Image Download</string>
+    <string name="text_loadapp_radio">LoadApp - Current Repo by Udacity</string>
+    <string name="text_retrofit_radio">RetroFit - Typesafe HTTP client</string>
+    <string name="cloud_image_view">Download Image</string>
 </resources>
