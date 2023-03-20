@@ -28,7 +28,7 @@ class LoadingButton @JvmOverloads constructor(
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 50f
-        typeface = Typeface.create("Roboto", Typeface.NORMAL)
+        // typeface = Typeface.create("Roboto", Typeface.NORMAL)
         color = context.getColor(R.color.colorPrimary)
     }
 
@@ -37,7 +37,7 @@ class LoadingButton @JvmOverloads constructor(
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 50f
-        typeface = Typeface.create("Roboto", Typeface.NORMAL)
+        // typeface = Typeface.create("Roboto", Typeface.NORMAL)
         color = context.getColor(R.color.colorPrimaryDark)
     }
     //Paint for the Orange circle
@@ -54,7 +54,7 @@ class LoadingButton @JvmOverloads constructor(
         typeface = Typeface.create("", Typeface.BOLD)
     }
 
-    // private val valueAnimator = ValueAnimator()
+    private val valueAnimator = ValueAnimator()
 
     var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
@@ -78,7 +78,7 @@ class LoadingButton @JvmOverloads constructor(
             is ButtonState.Loading -> {
                 drawUnclickedButton(canvas)
                 //draw clicked Button
-                // drawLoadingButton(canvas)
+                drawLoadingButton(canvas)
                 //drawing orange circle
                 // drawOrangeCircle(canvas)
             }
@@ -107,58 +107,57 @@ class LoadingButton @JvmOverloads constructor(
         invalidate()
     }
     //drawing the loading button
-//    private fun drawLoadingButton(canvas: Canvas){
-//        val percentageToFill = getCurrentPercentageToFill()
-//        val fillingRect = RectF(0f, heightSize.toFloat(), percentageToFill, 0f)
-//
-//        //animating the filled button
-//        canvas.drawRect(fillingRect, filledRectPaint)
-//        invalidate()
-//    }
+    private fun drawLoadingButton(canvas: Canvas){
+        val percentageToFill = getCurrentPercentageToFill()
+        val fillingRect = RectF(0f, heightSize.toFloat(), percentageToFill, 0f)
+
+        //animating the filled button
+        canvas.drawRect(fillingRect, filledRectPaint)
+        invalidate()
+    }
 
     //drawing the orange circle
-//    private fun drawOrangeCircle(canvas: Canvas){
-//        val horizontalCenter = ((width/2)+(width/3)).toFloat()
-//        val verticalCenter = (height/2).toFloat()
-//        val ovalSize = 30
-//        ovalSpace.set(
-//            horizontalCenter - ovalSize,
-//            verticalCenter - ovalSize,
-//            horizontalCenter + ovalSize,
-//            verticalCenter + ovalSize
-//        )
-//
-//        val percentageToFill = getCurrentPercentageToFill()
-//
-//        //animating the filled button
-//        canvas.drawArc(ovalSpace, 0f, percentageToFill, false, orangeCirclePaint)
-//        invalidate()
-//
-//    }
+    private fun drawOrangeCircle(canvas: Canvas){
+        val horizontalCenter = ((width/2)+(width/3)).toFloat()
+        val verticalCenter = (height/2).toFloat()
+        val ovalSize = 30
+        ovalSpace.set(
+            horizontalCenter - ovalSize,
+            verticalCenter - ovalSize,
+            horizontalCenter + ovalSize,
+            verticalCenter + ovalSize
+        )
 
-//    private fun getCurrentPercentageToFill() = (widthSize * (currentPercentage / PERCENTAGE_DIVIDER)).toFloat()
-//
-//    //Followed a tutorial animation a circle progress and adapted it to fill the rectangle
-//    //https://medium.com/@paulnunezm/canvas-animations-simple-circle-progress-view-on-android-8309900ab8ed
-//    fun animateProgress() {
-//        //holdes animation values from 0 to 100
-//        val valuesHolder = PropertyValuesHolder.ofFloat("percentage", 0f, 100f)
-//
-//        //instance of ValueAnimator
-//        valueAnimator.apply {
-//            setValues(valuesHolder)
-//            //need to set the duration to the duration of the download
-//            duration =400
-//            addUpdateListener {
-//                val percentage = it.getAnimatedValue(PERCENTAGE_VALUE_HOLDER) as Float
-//                currentPercentage = percentage.toInt()
-//                invalidate()
-//            }
-//        }
-//        valueAnimator.start()
-//        valueAnimator.repeatCount = ObjectAnimator.INFINITE
-//        valueAnimator.repeatMode = ObjectAnimator.RESTART
-//    }
+        val percentageToFill = getCurrentPercentageToFill()
+
+        //animating the filled button
+        canvas.drawArc(ovalSpace, 0f, percentageToFill, false, orangeCirclePaint)
+        invalidate()
+
+    }
+
+
+    private fun getCurrentPercentageToFill() = (widthSize * (currentPercentage / PERCENTAGE_DIVIDER)).toFloat()
+
+    fun animateProgress() {
+        //holdes animation values from 0 to 100
+        val valuesHolder = PropertyValuesHolder.ofFloat("percentage", 0f, 100f)
+
+        //instance of ValueAnimator
+        valueAnimator.apply {
+            setValues(valuesHolder)
+            //need to set the duration to the duration of the download
+            duration =400
+            addUpdateListener {
+                val percentage = it.getAnimatedValue(PERCENTAGE_VALUE_HOLDER) as Float
+                currentPercentage = percentage.toInt()
+                invalidate()
+            }
+        }
+        valueAnimator.start()
+        valueAnimator.repeatCount = ObjectAnimator.INFINITE
+        valueAnimator.repeatMode = ObjectAnimator.RESTART
+    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -180,6 +179,14 @@ class LoadingButton @JvmOverloads constructor(
     companion object {
         const val PERCENTAGE_DIVIDER = 100.0
         const val PERCENTAGE_VALUE_HOLDER = "percentage"
+    }
+
+    override fun performClick(): Boolean {
+        if (super.performClick()) return true
+
+
+        invalidate()
+        return true
     }
 
 }
