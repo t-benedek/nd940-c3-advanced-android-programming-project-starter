@@ -15,4 +15,5 @@
     <string name="text_loadapp_radio">LoadApp - Current Repo by Udacity</string>
     <string name="text_retrofit_radio">RetroFit - Typesafe HTTP client</string>
     <string name="cloud_image_view">Download Image</string>
+    <string name="button_download">Download</string>
 </resources>
