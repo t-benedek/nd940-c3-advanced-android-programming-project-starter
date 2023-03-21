@@ -9,15 +9,20 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 
+
 class MainActivity : AppCompatActivity() {
 
     private var downloadID: Long = 0
+    private lateinit var downloadURL: String
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
@@ -28,10 +33,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        // binding = inflate(layoutInflater)
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         custom_button.setOnClickListener {
-            download()
+            if (this::downloadURL.isInitialized) {
+                custom_button.buttonState = ButtonState.Loading
+                download()
+            }
+            else {
+                Toast.makeText(applicationContext, R.string.select_download_source, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -54,6 +66,33 @@ class MainActivity : AppCompatActivity() {
         downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
     }
+
+    private fun onRadioButtonClicked() {
+        val radioGroup = findViewById<RadioGroup>(R.id.radio_group)
+        radioGroup.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener {
+            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+                when (checkedId) {
+                    R.id.loadapp_radio -> {
+                        // radioButtonClicked = applicationContext.getString(R.string.text_loadapp_radio)
+                        Log.i("Main Activity", "loadApp")
+                        downloadURL = "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/refs/heads/master.zip"
+                    }
+                    R.id.retrofit_radio -> {
+                        // radioButtonClicked = applicationContext.getString(R.string.text_retrofit_radio)
+                        Log.i("Main Activity", "retrofit")
+                        downloadURL = "https://github.com/square/retrofit/archive/refs/heads/master.zip"
+                    }
+                    R.id.glide_radio -> {
+                        // radioButtonClicked = applicationContext.getString(R.string.text_glide_radio)
+                        Log.i("Main Activity", "glide")
+                        downloadURL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
+                    }
+                }
+            }
+        })
+    }
+
+
 
     companion object {
         private const val URL =

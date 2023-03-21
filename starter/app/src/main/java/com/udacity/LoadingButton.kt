@@ -6,7 +6,9 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import kotlin.properties.Delegates
+
 
 class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -60,12 +62,15 @@ class LoadingButton @JvmOverloads constructor(
         when (new) {
             ButtonState.Loading -> {
                 Log.i("Main Activity", "State Loading")
+                toast("Loading state")
                 //starts the loading animation
                 // animateProgress()
+
             }
             ButtonState.Completed -> {
                 // valueAnimator.cancel()
                 Log.i("Main Activity", "State Completed")
+                toast("Loading DONE")
             }
         }
     }
@@ -187,6 +192,12 @@ class LoadingButton @JvmOverloads constructor(
 
         invalidate()
         return true
+    }
+
+    fun toast(msg: String) {
+        Toast.makeText(
+            context, msg, Toast.LENGTH_LONG
+        ).show()
     }
 
 }

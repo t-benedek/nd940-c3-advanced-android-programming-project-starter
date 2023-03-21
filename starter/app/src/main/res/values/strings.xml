@@ -16,4 +16,5 @@
     <string name="text_retrofit_radio">RetroFit - Typesafe HTTP client</string>
     <string name="cloud_image_view">Download Image</string>
     <string name="button_download">Download</string>
+    <string name="select_download_source">Please select download</string>
 </resources>
