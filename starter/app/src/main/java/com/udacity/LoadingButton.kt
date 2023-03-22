@@ -62,15 +62,13 @@ class LoadingButton @JvmOverloads constructor(
         when (new) {
             ButtonState.Loading -> {
                 Log.i("Main Activity", "State Loading")
-                toast("Loading state")
                 //starts the loading animation
-                // animateProgress()
+                animateProgress()
 
             }
             ButtonState.Completed -> {
-                // valueAnimator.cancel()
+                valueAnimator.cancel()
                 Log.i("Main Activity", "State Completed")
-                toast("Loading DONE")
             }
         }
     }
@@ -85,7 +83,7 @@ class LoadingButton @JvmOverloads constructor(
                 //draw clicked Button
                 drawLoadingButton(canvas)
                 //drawing orange circle
-                // drawOrangeCircle(canvas)
+                drawOrangeCircle(canvas)
             }
         }
         //Drawing Button Text, depending on the state
