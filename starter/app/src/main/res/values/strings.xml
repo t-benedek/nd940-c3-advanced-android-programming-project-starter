@@ -22,4 +22,10 @@
     <string name="cloud_image_view">Download Image</string>
     <string name="button_download">Download</string>
     <string name="select_download_source">Please select download</string>
+
+    <string name="button_ok">OK </string>
+    <string name="select_file_text">Please select the file to download</string>
+    <string name="file_name">File name:</string>
+    <string name="status_text">Status:</string>
+
 </resources>

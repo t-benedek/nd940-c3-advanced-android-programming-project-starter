@@ -7,16 +7,18 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.udacity.DetailActivity
 import com.udacity.R
+import com.udacity.utils.NameAndStatus
 
 // Notification ID.
 private val NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
 private val FLAGS = 0
 
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context){
+fun NotificationManager.sendNotification(nameAndStatus: NameAndStatus, messageBody: String, applicationContext: Context){
 
     //Intent to open DetailActivity when the user clicks the notification
     val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+        .putExtra("nameAndStatus", nameAndStatus)
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT
     )

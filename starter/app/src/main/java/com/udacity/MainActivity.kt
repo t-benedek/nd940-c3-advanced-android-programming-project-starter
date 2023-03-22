@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.udacity.util.cancelNotifications
 import com.udacity.util.sendNotification
+import com.udacity.utils.NameAndStatus
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -22,10 +23,11 @@ class MainActivity : AppCompatActivity() {
 
     private var downloadID: Long = 0
     private lateinit var downloadURL: String
+    private var status = ""
 
-    private lateinit var notificationManager: NotificationManager
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
+//    private lateinit var notificationManager: NotificationManager
+//    private lateinit var pendingIntent: PendingIntent
+//    private lateinit var action: NotificationCompat.Action
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,12 +57,14 @@ class MainActivity : AppCompatActivity() {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             //Checking if the received broadcast is for our enqueued download by matching download id
             if (downloadID == id) {
+                status = "SUCCESS"
                 //triggers the notification
                 onDownloadComplete(applicationContext.getString(R.string.notification_download_completed))
                 //restores state to draw the button
                 custom_button.buttonState = ButtonState.Completed
             }
             else{
+                status = "FAILED"
                 custom_button.buttonState = ButtonState.Completed
                 onDownloadComplete(applicationContext.getString(R.string.notification_download_failed))
             }
@@ -73,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             NotificationManager::class.java) as NotificationManager
 
         notificationManager.cancelNotifications()
-        notificationManager.sendNotification(message, applicationContext)
+        notificationManager.sendNotification(NameAndStatus(downloadURL, status) , message, applicationContext)
     }
 
     private fun download() {
