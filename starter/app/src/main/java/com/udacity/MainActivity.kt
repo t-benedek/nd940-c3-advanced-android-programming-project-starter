@@ -1,19 +1,18 @@
 package com.udacity
 
-import android.app.DownloadManager
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.app.*
+import android.content.*
+import android.graphics.Color
 import android.net.Uri
-import android.os.Bundle
+import android.os.*
 import android.util.Log
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import com.udacity.util.cancelNotifications
+import com.udacity.util.sendNotification
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -33,8 +32,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        // binding = inflate(layoutInflater)
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
+        createChanel(getString(R.string.download_notification_channel_id), getString(R.string.download_notification_channel_name))
 
         custom_button.setOnClickListener {
             onRadioButtonClicked()
@@ -48,10 +48,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //listening to broadcast to know when the download is completed
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            //Fetching the download id received with the broadcast
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            //Checking if the received broadcast is for our enqueued download by matching download id
+            if (downloadID == id) {
+                //triggers the notification
+                onDownloadComplete(applicationContext.getString(R.string.notification_download_completed))
+                //restores state to draw the button
+                custom_button.buttonState = ButtonState.Completed
+            }
+            else{
+                custom_button.buttonState = ButtonState.Completed
+                onDownloadComplete(applicationContext.getString(R.string.notification_download_failed))
+            }
         }
+    }
+
+    private fun onDownloadComplete(message: String){
+        //initialize an instance of Notification Manager
+        val notificationManager = ContextCompat.getSystemService(applicationContext,
+            NotificationManager::class.java) as NotificationManager
+
+        notificationManager.cancelNotifications()
+        notificationManager.sendNotification(message, applicationContext)
     }
 
     private fun download() {
@@ -93,7 +115,21 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun createChanel(channelId: String, channelName: String){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val notificationChannel = NotificationChannel(
+                channelId, channelName, NotificationManager.IMPORTANCE_LOW)
 
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.app_name)
+
+            val notificationManager = this.getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+
+    }
 
     companion object {
         private const val URL =
