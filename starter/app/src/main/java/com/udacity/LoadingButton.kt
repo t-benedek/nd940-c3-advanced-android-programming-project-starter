@@ -136,7 +136,7 @@ class LoadingButton @JvmOverloads constructor(
         valueAnimator.apply {
             setValues(valuesHolder)
             //need to set the duration to the duration of the download
-            duration = 400
+            duration = 2000
             addUpdateListener {
                 val percentage = it.getAnimatedValue(PERCENTAGE_VALUE_HOLDER) as Float
                 currentPercentage = percentage.toInt()
@@ -176,11 +176,4 @@ class LoadingButton @JvmOverloads constructor(
         invalidate()
         return true
     }
-
-    fun toast(msg: String) {
-        Toast.makeText(
-            context, msg, Toast.LENGTH_LONG
-        ).show()
-    }
-
 }
