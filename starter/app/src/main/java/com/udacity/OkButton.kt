@@ -22,7 +22,7 @@ class OkButton @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = 50f
         typeface = Typeface.create("Roboto", Typeface.NORMAL)
-        color = context.getColor(R.color.orange_button)
+        color = context.getColor(R.color.orange_circle)
     }
 
     //text for the button

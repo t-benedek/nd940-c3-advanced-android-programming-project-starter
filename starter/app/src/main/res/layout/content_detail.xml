@@ -19,7 +19,6 @@
         tools:context=".DetailActivity"
         app:layoutDescription="@xml/activity_detail_scene">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_box"
             android:layout_width="match_parent"

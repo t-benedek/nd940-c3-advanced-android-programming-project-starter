@@ -14,12 +14,7 @@ class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    //custom Attributes
     private var attrSet = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton)
-//    private var unfilledColor = attrSet.getColor(R.styleable.LoadingButton_lb_background_color, ContextCompat.getColor(context, R.color.colorPrimary))
-//    private var textColorWhite = attrSet.getColor(R.styleable.LoadingButton_lb_text_color, ContextCompat.getColor(context, R.color.white))
-
-
     private var widthSize = 0
     private var heightSize = 0
     private var currentPercentage = 0
@@ -30,7 +25,6 @@ class LoadingButton @JvmOverloads constructor(
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 50f
-        // typeface = Typeface.create("Roboto", Typeface.NORMAL)
         color = context.getColor(R.color.colorPrimary)
     }
 
@@ -39,16 +33,14 @@ class LoadingButton @JvmOverloads constructor(
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 50f
-        // typeface = Typeface.create("Roboto", Typeface.NORMAL)
         color = context.getColor(R.color.colorPrimaryDark)
     }
-    //Paint for the Orange circle
-    private val orangeCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
+
+    private val loadingCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
         style = Paint.Style.FILL
-        color = context.getColor(R.color.orange_button)
+        color = context.getColor(R.color.orange_circle)
     }
 
-    //text for the button
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
         textAlign = Paint.Align.CENTER
         textSize = resources.getDimension(R.dimen.default_text_size)
@@ -61,14 +53,10 @@ class LoadingButton @JvmOverloads constructor(
     var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
             ButtonState.Loading -> {
-                Log.i("Main Activity", "State Loading")
-                //starts the loading animation
                 animateProgress()
-
             }
             ButtonState.Completed -> {
                 valueAnimator.cancel()
-                Log.i("Main Activity", "State Completed")
             }
         }
     }
@@ -80,9 +68,9 @@ class LoadingButton @JvmOverloads constructor(
             is ButtonState.Completed -> drawUnclickedButton(canvas)
             is ButtonState.Loading -> {
                 drawUnclickedButton(canvas)
-                //draw clicked Button
+
                 drawLoadingButton(canvas)
-                //drawing orange circle
+
                 drawOrangeCircle(canvas)
             }
         }
@@ -134,7 +122,7 @@ class LoadingButton @JvmOverloads constructor(
         val percentageToFill = getCurrentPercentageToFill()
 
         //animating the filled button
-        canvas.drawArc(ovalSpace, 0f, percentageToFill, false, orangeCirclePaint)
+        canvas.drawArc(ovalSpace, 0f, percentageToFill, false, loadingCirclePaint)
         invalidate()
     }
 

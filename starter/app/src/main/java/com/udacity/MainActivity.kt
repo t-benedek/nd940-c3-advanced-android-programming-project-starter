@@ -24,10 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var downloadURL: String
     private var status = ""
 
-//    private lateinit var notificationManager: NotificationManager
-//    private lateinit var pendingIntent: PendingIntent
-//    private lateinit var action: NotificationCompat.Action
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -89,27 +85,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addRadioButtonListener() {
-        radio_group.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener {
-            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                when (checkedId) {
-                    R.id.loadapp_radio -> {
-                        // radioButtonClicked = applicationContext.getString(R.string.text_loadapp_radio)
-                        Log.i("Main Activity", "loadApp")
-                        downloadURL = "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/refs/heads/master.zip"
-                    }
-                    R.id.retrofit_radio -> {
-                        // radioButtonClicked = applicationContext.getString(R.string.text_retrofit_radio)
-                        Log.i("Main Activity", "retrofit")
-                        downloadURL = "https://github.com/square/retrofit/archive/refs/heads/master.zip"
-                    }
-                    R.id.glide_radio -> {
-                        // radioButtonClicked = applicationContext.getString(R.string.text_glide_radio)
-                        Log.i("Main Activity", "glide")
-                        downloadURL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
-                    }
+        radio_group.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.loadapp_radio -> {
+                    Log.i("Main Activity", "loadApp")
+                    downloadURL =
+                        "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/refs/heads/master.zip"
+                }
+                R.id.retrofit_radio -> {
+                    Log.i("Main Activity", "retrofit")
+                    downloadURL = "https://github.com/square/retrofit/archive/refs/heads/master.zip"
+                }
+                R.id.glide_radio -> {
+                    Log.i("Main Activity", "glide")
+                    downloadURL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
                 }
             }
-        })
+        }
     }
 
     private fun createChanel(channelId: String, channelName: String){

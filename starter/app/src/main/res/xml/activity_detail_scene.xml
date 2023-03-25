@@ -2,12 +2,21 @@
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Transition
+        app:autoTransition="animateToEnd"
+        app:constraintSetStart="@+id/start"
+        app:constraintSetEnd="@id/end"
+        app:duration= "2000">
+        <KeyFrameSet />
+    </Transition>
+
     <ConstraintSet android:id="@+id/start">
         <Constraint android:id="@+id/custom_button" />
         <Constraint
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/ok_button"
             android:layout_width="match_parent"
+            android:alpha="0.0"
             android:id="@+id/constraint_box" />
     </ConstraintSet>
 
@@ -16,14 +25,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
+            android:alpha="1.0"
             android:id="@+id/constraint_box" />
     </ConstraintSet>
 
-    <Transition
-        app:autoTransition="animateToEnd"
-        app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@+id/start"
-        app:duration= "1000">
-        <KeyFrameSet />
-    </Transition>
 </MotionScene>
