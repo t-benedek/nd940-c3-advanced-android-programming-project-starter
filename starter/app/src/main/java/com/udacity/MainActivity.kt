@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.udacity.util.cancelNotifications
 import com.udacity.util.sendNotification
@@ -33,13 +32,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-
         createChanel(getString(R.string.download_notification_channel_id), getString(R.string.download_notification_channel_name))
 
+        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        addRadioButtonListener()
         custom_button.setOnClickListener {
-            onRadioButtonClicked()
+
             if (this::downloadURL.isInitialized) {
                 custom_button.buttonState = ButtonState.Loading
                 download()
@@ -53,18 +51,14 @@ class MainActivity : AppCompatActivity() {
     //listening to broadcast to know when the download is completed
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            //Fetching the download id received with the broadcast
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            //Checking if the received broadcast is for our enqueued download by matching download id
             if (downloadID == id) {
-                status = "SUCCESS"
-                //triggers the notification
+                status = "downloaded successfully"
                 onDownloadComplete(applicationContext.getString(R.string.notification_download_completed))
-                //restores state to draw the button
                 custom_button.buttonState = ButtonState.Completed
             }
             else{
-                status = "FAILED"
+                status = "downloaded FAILED"
                 custom_button.buttonState = ButtonState.Completed
                 onDownloadComplete(applicationContext.getString(R.string.notification_download_failed))
             }
@@ -94,9 +88,8 @@ class MainActivity : AppCompatActivity() {
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
     }
 
-    private fun onRadioButtonClicked() {
-        val radioGroup = findViewById<RadioGroup>(R.id.radio_group)
-        radioGroup.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener {
+    private fun addRadioButtonListener() {
+        radio_group.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
                 when (checkedId) {
                     R.id.loadapp_radio -> {
@@ -132,13 +125,6 @@ class MainActivity : AppCompatActivity() {
             val notificationManager = this.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)
         }
-
-    }
-
-    companion object {
-        private const val URL =
-            "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
-        private const val CHANNEL_ID = "channelId"
     }
 
 }

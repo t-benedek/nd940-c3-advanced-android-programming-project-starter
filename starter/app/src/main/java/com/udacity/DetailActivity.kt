@@ -20,7 +20,6 @@ class DetailActivity : AppCompatActivity() {
         val nameAndStatus = intent.getParcelableExtra<NameAndStatus>("nameAndStatus")
 
         binding.nameAndStatus = nameAndStatus
-        // setSupportActionBar(binding.toolbar)
         setContentView(binding.root)
 
         //Setting color of the status
@@ -30,7 +29,6 @@ class DetailActivity : AppCompatActivity() {
         else{
             binding.statusTextValue.setTextColor(Color.GREEN)
         }
-
 
         //Getting back to Main Activity Via an Intent
         binding.okButton.setOnClickListener{
