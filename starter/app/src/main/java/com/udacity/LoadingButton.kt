@@ -25,7 +25,7 @@ class LoadingButton @JvmOverloads constructor(
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 50f
-        color = context.getColor(R.color.colorPrimary)
+        color = context.getColor(R.color.button_standard)
     }
 
     //Button on clicked state and animation
@@ -44,7 +44,7 @@ class LoadingButton @JvmOverloads constructor(
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
         textAlign = Paint.Align.CENTER
         textSize = resources.getDimension(R.dimen.default_text_size)
-        color = context.getColor(R.color.white)
+        color = context.getColor(R.color.button_standard_text_color)
         typeface = Typeface.create("", Typeface.BOLD)
     }
 

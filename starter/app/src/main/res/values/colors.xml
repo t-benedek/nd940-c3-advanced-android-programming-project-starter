@@ -6,4 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="cloud_purple">#aa00FF</color>
     <color name="orange_circle">#FFaa00</color>
+    <color name="button_standard">#BB00</color>
+    <color name="button_standard_text_color">#000000</color>
 </resources>
