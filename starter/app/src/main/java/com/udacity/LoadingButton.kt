@@ -14,18 +14,24 @@ class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+
     private var attrSet = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton)
     private var widthSize = 0
     private var heightSize = 0
     private var currentPercentage = 0
     private val ovalSpace = RectF()
 
+    private val loadingCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
+        style = Paint.Style.FILL
+        color = attrSet.getColor(R.styleable.LoadingButton_circleColor, Color.RED)
+    }
+
     //Main button in unclicked state
     private val rectPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 50f
-        color = context.getColor(R.color.button_standard)
+        color = attrSet.getColor(R.styleable.LoadingButton_buttonColor, Color.BLACK)
     }
 
     //Button on clicked state and animation
@@ -36,10 +42,6 @@ class LoadingButton @JvmOverloads constructor(
         color = context.getColor(R.color.colorPrimaryDark)
     }
 
-    private val loadingCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
-        style = Paint.Style.FILL
-        color = context.getColor(R.color.orange_circle)
-    }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
         textAlign = Paint.Align.CENTER
