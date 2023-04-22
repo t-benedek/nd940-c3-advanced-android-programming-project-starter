@@ -14,7 +14,6 @@ class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-
     private var attrSet = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton)
     private var widthSize = 0
     private var heightSize = 0
@@ -138,7 +137,7 @@ class LoadingButton @JvmOverloads constructor(
         valueAnimator.apply {
             setValues(valuesHolder)
             //need to set the duration to the duration of the download
-            duration = 2000
+            duration = 1000
             addUpdateListener {
                 val percentage = it.getAnimatedValue(PERCENTAGE_VALUE_HOLDER) as Float
                 currentPercentage = percentage.toInt()
